@@ -7,7 +7,6 @@
     "test": "test"
   },
   "scripts": {
- //   "test": "wdio wdio.conf.js",
     "start": "node index.js"
   },
   "author": "",
