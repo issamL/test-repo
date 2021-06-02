@@ -3,7 +3,7 @@ const SecurePage = require('../pageobjects/secure.page');
 
 describe('My Login application', () => {
     it('should login with valid credentials', async () => {
-        await browser.url('https://localhost/test-repo/app/login.html');
+        await browser.url('https://localhost::8080/test-repo/app/login.html');
         await browser.pause( 2000 );
         await LoginPage.login('myuser', 'az12');
         await browser.pause( 2000 );
