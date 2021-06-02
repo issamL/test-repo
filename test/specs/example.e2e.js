@@ -1,4 +1,4 @@
-const LoginPage = require('../pageobjects/login.page.js');
+const LoginPage = require('../pageobjects/LoginPage');
 
 describe('My Login application', () => {
     it('should login with valid credentials', async () => {
