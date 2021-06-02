@@ -21,7 +21,7 @@ jobs:
           - v1-dependencies-
 
 
-      - run: npm install
+      - run: npm install -g
       - run: npm install wdio@cli
       - run: npm install wdio-mocha-framework
       - run: rm -rf ./node_modues/wdio-mocha-framework
