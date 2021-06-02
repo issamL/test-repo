@@ -24,6 +24,7 @@ jobs:
       - run: npm install
       - run: npm install wdio-mocha-framework
       - run: rm -rf ./node_modues/wdio-mocha-framework
+      - run: ls && cd .. && ls 
       - run: npm i --save-dev wdio-mocha-framework@latest
 
       - save_cache:
