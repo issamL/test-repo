@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:14.15.4
       - image: selenium/hub
         name: hub
       - image: selenium/node-firefox
@@ -22,7 +22,7 @@ jobs:
 
 
 
-      - run: npm install -g
+      - run: npm install
       - run: npm install wdio-mocha-framework
       - run: rm -rf ./node_modues/wdio-mocha-framework
       # - run: ls && cd .. && ls 
