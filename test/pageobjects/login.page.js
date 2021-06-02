@@ -1,4 +1,4 @@
-const Page = require('page.js');
+const Page = require('./page.js');
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -30,5 +30,4 @@ class LoginPage extends Page {
         return super.open('login.html');
     }
 }
-
 module.exports = new LoginPage();
