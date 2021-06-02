@@ -12,4 +12,4 @@ class Page {
     }
 }
 
-module.exports.Page = Page;
+module.exports.Page = new Page();
