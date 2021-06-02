@@ -8,6 +8,6 @@ module.exports = class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open (path) {
-        return browser.url(`http://localhost::4444/test-repo/app/${path}`)
+        return browser.url(`http://localhost/home/circleci/repo/app/${path}`)
     }
 }
