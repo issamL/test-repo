@@ -39,7 +39,7 @@ jobs:
       #- run: ls && cd .. && ls
       #- run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
       - run: npm install @wdio/cli
-      - run: ls && cd .. && ls && cd .. && ls
+      - run: ls && cd .. && cd www && ls && cd ../repo && ls
       - run: npx wdio run ./wdio.conf.js
       - run:
           name: Make history dir for allure
