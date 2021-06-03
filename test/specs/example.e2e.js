@@ -5,8 +5,7 @@ describe('My Login application', () => {
 
         await browser.url('http://localhost:8080/home/circleci/repo/app/login.html');
         await browser.pause( 2000 );
-        const user = $(() => document.getElementById('elem'));
-        await user.setValue('myuser');
+        await document.getElementById('elem').setValue('myuser');
         await $('#pwd').setValue('az12');
         await $('#signInSubmit').click();
         //await LoginPage.login('myuser', 'az12');
