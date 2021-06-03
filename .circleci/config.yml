@@ -3,9 +3,10 @@ jobs:
   build:
     docker:
       - image: circleci/node:lts-browsers
-    working_directory: ~/repo
+    working_directory: ~/www
     steps:
-      - checkout
+      - run: sudo apt-get install apache2
+      - run: ls && cd .. && ls
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -23,14 +24,14 @@ jobs:
       #     name: Start app
       #     command: npm start
       #     background: true
-      - run:
-          name: Download Selenium
-          command: cd .. && curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run: cd .. && mkdir selenium-logs
-      - run:
-          name: Start Selenium
-          command: cd .. && java -jar selenium-server-standalone-3.5.3.jar -log selenium-logs/selenium.log
-          background: true
+      # - run:
+      #     name: Download Selenium
+      #     command: cd .. && curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      # - run: cd .. && mkdir selenium-logs
+      # - run:
+      #     name: Start Selenium
+      #     command: cd .. && java -jar selenium-server-standalone-3.5.3.jar -log selenium-logs/selenium.log
+      #     background: true
       # run tests!
       #- run: mkdir wdio-v7 && cd wdio-v7 && npm install @wdio/cli
       #- run: ls && cd .. && ls
