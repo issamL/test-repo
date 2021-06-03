@@ -8,7 +8,7 @@ module.exports = class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open (path) {
-        return browser.url(`http://localhost:9515/session/9226c07af1404677664bcb54aad6254a/app/${path}`);
+        return browser.url(`http://localhost:9515/repo/app/${path}`);
     }
 }
 
