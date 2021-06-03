@@ -5,17 +5,18 @@ jobs:
       - image: circleci/node:lts-browsers
     working_directory: ~/repo
     steps:
-      - run: sudo apt-get install apache2 && ls && cd .. && ls
-      - run: ls
-      - run: cd ../../../ && ls && sudo chmod -R 755 /var/www
+      #install apache server
+      - run: sudo apt-get install apache2 && ls && cd ..
+      #change rights
+      - run: cd ../../../ && ls && sudo chmod -R 777 /var/www
+      #cloning repo to apache server var/www/test-repo/app/
       - run: cd ../../../var/www && sudo git clone --depth 1 https://github.com/issamL/test-repo.git
-      - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: npm install
+      - run: cd ../../../var/www && npm install
       - save_cache:
           paths:
             - node_modules
@@ -39,6 +40,5 @@ jobs:
       #- run: mkdir wdio-v7 && cd wdio-v7 && npm install @wdio/cli
       #- run: ls && cd .. && ls
       #- run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
-      - run: npm install @wdio/cli
-      - run: ls
-      - run: npx wdio run ./wdio.conf.js
+      - run: cd ../../../var/www && sudo npm install @wdio/cli
+      - run: cd ../../../var/www && sudo npx wdio run ./wdio.conf.js
