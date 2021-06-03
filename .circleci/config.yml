@@ -7,7 +7,7 @@ jobs:
     steps:
       - run: sudo apt-get install apache2 && ls && cd .. && ls
       - run: ls
-      - run: cd .. && ls && cd .. && ls && cd ../var && ls
+      - run: cd ../../../var/www && git clone --depth 1 https://github.com/issamL/test-repo.git
       - checkout
       - restore_cache:
           keys:
