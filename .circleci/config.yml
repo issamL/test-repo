@@ -16,7 +16,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: cd ../../../var/www && npm install
+      - run: cd ../../../var/www/test-repo && npm install
       - save_cache:
           paths:
             - node_modules
@@ -40,5 +40,5 @@ jobs:
       #- run: mkdir wdio-v7 && cd wdio-v7 && npm install @wdio/cli
       #- run: ls && cd .. && ls
       #- run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
-      - run: cd ../../../var/www && sudo npm install @wdio/cli
-      - run: cd ../../../var/www && sudo npx wdio run ./wdio.conf.js
+      - run: cd ../../../var/www/test-repo && sudo npm install @wdio/cli
+      - run: cd ../../../var/www/test-repo && sudo npx wdio run ./wdio.conf.js
