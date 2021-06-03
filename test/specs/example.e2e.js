@@ -3,7 +3,7 @@ const LoginPage = require('../pageobjects/login.page');
 describe('My Login application', () => {
     it('should login with valid credentials', async () => {
         await LoginPage.open('login.html');
-        await browser.pause( 10000 );
+        await browser.pause( 2000 );
         await LoginPage.login('myuser', 'az12');
         await browser.pause( 2000 );
         const elem = $('#fh5co-logo');

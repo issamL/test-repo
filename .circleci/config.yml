@@ -10,6 +10,7 @@ jobs:
       - run: sudo apt-get install apache2 && ls && cd ..
       #change rights
       - run: cd ../../../ && ls && sudo chmod -R 777 /var/www
+      - run: ipconfig
       #cloning repo to apache server var/www/test-repo/app/
       - run: cd ../../../var/www && sudo git clone --depth 1 https://github.com/issamL/test-repo.git && sudo chmod -R 777 /var/www
       - restore_cache:
