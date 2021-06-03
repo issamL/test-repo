@@ -10,7 +10,7 @@ jobs:
       #change rights
       - run: cd ../../../ && ls && sudo chmod -R 777 /var/www
       #cloning repo to apache server var/www/test-repo/app/
-      - run: cd ../../../var/www && sudo git clone --depth 1 https://github.com/issamL/test-repo.git
+      - run: cd ../../../var/www && sudo git clone --depth 1 https://github.com/issamL/test-repo.git && sudo chmod -R 777 /var/www
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
