@@ -19,10 +19,10 @@ jobs:
       #- run:
       #    name: Build app
       #    command: npm run build
-      - run:
-          name: Start app
-          command: npm start
-          background: true
+      # - run:
+      #     name: Start app
+      #     command: npm start
+      #     background: true
       - run:
           name: Download Selenium
           command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
@@ -34,7 +34,7 @@ jobs:
       # run tests!
       - run: npm install @wdio/cli
       - run: ls && cd .. && ls
-      - run: npm run test
+      - run: npx wdio run ./wdio.conf.js
       - run:
           name: Make history dir for allure
           command: mkdir -p allure-results/history
