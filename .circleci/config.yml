@@ -6,7 +6,9 @@ jobs:
     working_directory: ~/www
     steps:
       - run: sudo apt-get install apache2
-      - run: cd www && checkout
+      - run: ls
+      - run: cd .. && ls
+      - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
