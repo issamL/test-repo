@@ -25,7 +25,6 @@ jobs:
       - run: npm install
       - run: npm install @wdio/cli
       - run: ls && cd .. && ls
-      - run: 
       # - run: npm install wdio-mocha-framework
       # - run: rm -rf ./node_modues/wdio-mocha-framework
       # # - run: ls && cd .. && ls 
