@@ -7,7 +7,7 @@ jobs:
     steps:
       - run: sudo apt-get install apache2 && ls && cd .. && ls
       - run: ls
-      - run: cd .. && ls && cd .. && ls && cd .. && ls
+      - run: cd .. && ls && cd .. && ls && cd ../var && ls
       - checkout
       - restore_cache:
           keys:
