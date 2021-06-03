@@ -3,7 +3,7 @@ new LoginPage();
 describe('My Login application', () => {
     it('should login with valid credentials', async () => {
 
-        await browser.url('http://localhost/home/circleci/repo/app/login.html');
+        await browser.url('http://localhost/repo/app/login.html');
         await browser.pause( 5000 );
         await browser.element("#username").setValue('myuser');
         await $('#pwd').setValue('az12');
