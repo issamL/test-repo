@@ -8,7 +8,7 @@ class Page {
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
     open (path) {
-        return browser.url(`http://localhost:8080/home/circleci/repo/app/${path}`);
+        return browser.url(`http://localhost/home/circleci/repo/app/${path}`);
     }
 }
 
