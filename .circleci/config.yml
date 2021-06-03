@@ -1,49 +1,82 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:its-browsers
-      - image: selenium/hub
-        name: hub
-      - image: selenium/node-firefox
-        environment:
-          HUB_PORT_4444_TCP_ADDR: hub
-          HUB_PORT_4444_TCP_PORT: 4444
+      - image: circleci/node:lts-browsers
     working_directory: ~/repo
     steps:
       - checkout
-
+      - setup_remote_docker:
+          docker_layer_caching: true
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-
-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: .npmrc settings
+          command: |
+            echo "loglevel=verbose" >> ~/.npmrc
+            echo "registry=https://nexus.aws.seloger.tools/repository/npm/" >> ~/.npmrc
+            echo "_authToken=NpmToken.${NEXUS_NPM_TOKEN}" >> ~/.npmrc
+            echo "@gsl:registry=https://nexus.aws.seloger.tools/repository/npm-private/" >> ~/.npmrc
+            echo "//nexus.aws.seloger.tools/repository/npm-private/:_authToken=NpmToken.${NEXUS_NPM_TOKEN}" >> ~/.npmrc
       - run: npm install
-      - run: npm install @wdio/cli
-      - run: ls && cd .. && ls
-      # - run: npm install wdio-mocha-framework
-      # - run: rm -rf ./node_modues/wdio-mocha-framework
-      # # - run: ls && cd .. && ls 
-      # - run: npm i --save-dev wdio-mocha-framework@latest
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run:
-          command: npm run start
+          name: Build app
+          command: npm run build
+      - run:
+          name: Start app
+          command: npm start
           background: true
-        
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run: mkdir selenium-logs
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log selenium-logs/selenium.log
+          background: true
       # run tests!
-      - run: npx wdio run ./wdio.conf.js
-      # - run: /usr/local/bin/node /home/circleci/repo/node_modules/fibers/build
-      # - run: npm run test
-
-      # - store_artifacts:
-      #     path: ./errorShots/
-      #     when: always
+      - run: npm run ci
+      - run:
+          name: Make history dir for allure
+          command: mkdir -p allure-results/history
+          when: always
+      - run:
+          name: Get previous artifact links
+          command: curl -G --data-urlencode "branch=$CIRCLE_BRANCH" "https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/latest/artifacts?circle-token=$CIRCLE_TOKEN&filter=completed" | grep -o 'https\:\/\/.*history\/history.*\.json' > artifacts.txt || true
+          when: always
+      - run:
+          name: Download history artfacts
+          command: <artifacts.txt xargs -P4 -I % wget %?circle-token=$CIRCLE_TOKEN
+          when: always
+      - run:
+          name: Rename and copy history artifacts to allure-result
+          command: |
+            mv history.json?circle-token=$CIRCLE_TOKEN history.json && mv history-trend.json?circle-token=$CIRCLE_TOKEN history-trend.json || true
+            cp history.json allure-results/history/ && cp history-trend.json allure-results/history/ || true
+            mv categories-trend.json?circle-token=$CIRCLE_TOKEN categories-trend.json && mv duration-trend.json?circle-token=$CIRCLE_TOKEN duration-trend.json || true
+            cp categories-trend.json allure-results/history/ && cp duration-trend.json allure-results/history/ || true
+            mv retry-trend.json?circle-token=$CIRCLE_TOKEN retry-trend.json || true
+            cp retry-trend.json allure-results/history/ || true
+          when: always
+      # create allure report
+      - run: npm run make-report
+      - store_test_results:
+          path: ./junit-report/
+          when: always
+      - store_artifacts:
+          path: ./junit-report/
+          when: always
+      - store_artifacts:
+          path: ./allure-report/
+          when: always
+      - store_artifacts:
+          path: ./selenium-logs/
+          when: always
