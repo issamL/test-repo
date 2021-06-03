@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:lts-browsers
     working_directory: ~/repo
     steps:
-      - run: sudo apt-get install apache2
+      - run: sudo apt-get install apache2 && ls && cd .. && ls
       - run: ls
       - run: cd .. && ls && cd .. && ls && cd .. && ls
       - checkout
