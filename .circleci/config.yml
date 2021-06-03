@@ -32,12 +32,11 @@ jobs:
           command: java -jar selenium-server-standalone-3.5.3.jar -log selenium-logs/selenium.log
           background: true
       # run tests!
-      - run: mkdir wdio-v7 && cd wdio-v7 && npm install @wdio/cli
-      - run: ls && cd .. && ls
-      - run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
-      #- run: npm install @wdio/cli
+      #- run: mkdir wdio-v7 && cd wdio-v7 && npm install @wdio/cli
       #- run: ls && cd .. && ls
-      #- run: npx wdio run ./wdio.conf.js
+      #- run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
+      - run: npm install @wdio/cli
+      - run: npx wdio run ./wdio.conf.js
       - run:
           name: Make history dir for allure
           command: mkdir -p allure-results/history
