@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:v12.16.1
       - image: selenium/hub
         name: hub
       - image: selenium/node-firefox
@@ -23,10 +23,13 @@ jobs:
 
 
       - run: npm install
-      - run: npm install wdio-mocha-framework
-      - run: rm -rf ./node_modues/wdio-mocha-framework
-      # - run: ls && cd .. && ls 
-      - run: npm i --save-dev wdio-mocha-framework@latest
+      - run: npm install @wdio/cli
+      - run: ls && cd .. && ls
+      - run: 
+      # - run: npm install wdio-mocha-framework
+      # - run: rm -rf ./node_modues/wdio-mocha-framework
+      # # - run: ls && cd .. && ls 
+      # - run: npm i --save-dev wdio-mocha-framework@latest
 
       - save_cache:
           paths:
@@ -38,9 +41,9 @@ jobs:
           background: true
         
       # run tests!
-      # - run: sudo npm install -g node-gyp
+      - run: npx wdio run ./wdio.conf.js
       # - run: /usr/local/bin/node /home/circleci/repo/node_modules/fibers/build
-      - run: npm run test
+      # - run: npm run test
 
       # - store_artifacts:
       #     path: ./errorShots/
