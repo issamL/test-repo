@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:v12.16.1
+      - image: circleci/node:its-browsers
       - image: selenium/hub
         name: hub
       - image: selenium/node-firefox
