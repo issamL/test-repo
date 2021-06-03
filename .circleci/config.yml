@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:lts-browsers
-    working_directory: ~/www
+    working_directory: ~/repo
     steps:
       - run: sudo apt-get install apache2
       - run: ls
@@ -39,21 +39,6 @@ jobs:
       #- run: ls && cd .. && ls
       #- run: cd wdio-v7 && npx wdio config --yes && npx wdio run ./wdio.conf.js
       - run: npm install @wdio/cli
-      - run: ls && cd .. && cd www && ls && cd ../repo && ls
+      - run: ls
       - run: npx wdio run ./wdio.conf.js
-      - run:
-          name: Make history dir for allure
-          command: mkdir -p allure-results/history
-          when: always
-      - run:
-          name: Download history artfacts
-          command: <artifacts.txt xargs -P4 -I % wget %?circle-token=$CIRCLE_TOKEN
-          when: always
-      # create allure report
-      - run: npm run make-report
-      - store_artifacts:
-          path: ./allure-report/
-          when: always
-      - store_artifacts:
-          path: ./selenium-logs/
-          when: always
+
