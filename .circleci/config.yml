@@ -34,7 +34,7 @@ jobs:
       # run tests!
       - run: npm install @wdio/cli
       - run: ls && cd .. && ls
-      - run: npx wdio run ./wdio.conf.js
+      - run: npm run test
       - run:
           name: Make history dir for allure
           command: mkdir -p allure-results/history
